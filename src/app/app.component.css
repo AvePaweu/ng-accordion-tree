@@ -1,0 +1,12 @@
+.indent {
+  padding-left: 1.5em !important;
+}
+
+div.content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.indent .ui.accordion {
+  margin-top: 1px !important;
+}
