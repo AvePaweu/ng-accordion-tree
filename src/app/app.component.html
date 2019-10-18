@@ -6,20 +6,23 @@
         <sui-accordion-panel [isOpen]="i.isOpen" [isDisabled]="true">
           <div title>
             <i class="dropdown icon" (click)="i.isOpen = !i.isOpen"></i>
-            <sui-checkbox [isIndeterminate]="true">{{ i.title }}</sui-checkbox>
+            <sui-checkbox [isIndeterminate]="i.isIndeterminate" (checkChange)="checkItemsAndChildren(i)"
+              [(ngModel)]="i.checked">{{ i.title }}</sui-checkbox>
           </div>
           <div content class="indent">
             <sui-accordion [closeOthers]="false">
               <sui-accordion-panel *ngFor="let child of i.children" [isOpen]="child.isOpen" [isDisabled]="true">
                 <div title>
                   <i class="dropdown icon" (click)="child.isOpen = !child.isOpen"></i>
-                  <sui-checkbox>{{ child.title }}</sui-checkbox>
+                  <sui-checkbox [isIndeterminate]="child.isIndeterminate" (checkChange)="checkChildren(child)"
+                    [(ngModel)]="child.checked">{{ child.title }}</sui-checkbox>
                 </div>
                 <div content class="indent">
                   <sui-accordion>
                     <sui-accordion-panel *ngFor="let child1 of child.children">
                       <div title class="indent">
-                        <sui-checkbox>{{ child1.title }}</sui-checkbox>
+                        <sui-checkbox [(ngModel)]="child1.checked" (checkChange)="checkChildren(child)">
+                          {{ child1.title }}</sui-checkbox>
                       </div>
                     </sui-accordion-panel>
                   </sui-accordion>
@@ -30,5 +33,5 @@
         </sui-accordion-panel>
       </sui-accordion>
     </div>
-  </div>  
+  </div>
 </div>
