@@ -80,6 +80,7 @@ export class AppComponent implements OnInit {
   }
 
   checkItemsAndChildren(group) {
+    group.isIndeterminate = false;
     group.children.forEach(item => {
       item.checked = group.checked;
       item.isIndeterminate = false;
@@ -91,10 +92,34 @@ export class AppComponent implements OnInit {
   }
 
   checkChildren(item) {
+    item.isIndeterminate = false;
     item.children.forEach(child => {
       child.checked = item.checked;
       child.isIndeterminate = false;
     });
+    const group = this.items.find(g => g.children.indexOf(item) > -1);
+    const { checked, indeterminate } = this.checkIndeterminateForGroup(group);
+    group.checked = checked;
+    group.isIndeterminate = indeterminate;
+  }
+
+  checkIndeterminateForGroup(group) {
+    const checkedItems = group.children.filter(item => item.checked === true);
+    const indeterminateItems = group.children.filter(item => item.isIndeterminate === true);
+    return {
+      checked: checkedItems.length === group.children.length,
+      indeterminate: checkedItems.length > 0 && checkedItems.length < group.children.length || indeterminateItems.length > 0
+    };
+  }
+
+  checkIndeterminateForItem(item) {
+    const checkedChildren = item.children.filter(child => child.checked === true);
+    item.checked = checkedChildren.length === item.children.length;
+    item.isIndeterminate = checkedChildren.length > 0 && checkedChildren.length < item.children.length;
+    const group = this.items.find(g => g.children.indexOf(item) > -1);
+    const { checked, indeterminate } = this.checkIndeterminateForGroup(group);
+    group.checked = checked;
+    group.isIndeterminate = indeterminate;
   }
 
   ngOnInit() {

@@ -21,7 +21,7 @@
                   <sui-accordion>
                     <sui-accordion-panel *ngFor="let child1 of child.children">
                       <div title class="indent">
-                        <sui-checkbox [(ngModel)]="child1.checked" (checkChange)="checkChildren(child)">
+                        <sui-checkbox [(ngModel)]="child1.checked" (checkChange)="checkIndeterminateForItem(child)">
                           {{ child1.title }}</sui-checkbox>
                       </div>
                     </sui-accordion-panel>
